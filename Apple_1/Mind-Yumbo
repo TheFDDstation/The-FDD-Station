@@ -1,0 +1,163 @@
+;My first 6502 game ever, FDD's "Mind-Yumbo" fitting in just 256 bytes, for my friend MM99YUM
+;It was inspired by Woz's "Master Mind" game for the same machine, but this has a lot more to it
+;Last Update 9:50 PM GMT-6 Tue-6-Jan-2026
+;
+;When starting the game (type "0300R" on WOZMON after entering in the assembled object code) the game instructs you how the hint decoding works:
+:+ Means that the digit is at the correct spot
+;= Means that the digit is in the number, but at the wrong spot
+;- Means that the digits isn't anywhere in the number
+;After that, the game will ask you how many digits-long will the random number be, input a length between 0-9
+;Just before starting the round, the game will wait for you to input the difficulty mode after entering in the numbers digit-length:
+;Hard Mode - If you press the letter "H" on your keyboard, the game will not display the "-" symbols when decoding the hint, making it behave just like Woz's Master Mind
+;Easy Mode - Press any other key and the "-"'s visible, behaving just like a wordle game but with numbers
+;
+;On your left you got the number of guesses you have Done so far, the "score"
+;After inputing your guess of the number, the Apple-1 will decode the hint
+;
+KBD      = $D010        ; PIA.A keyboard input
+KBDCR    = $D011        ; PIA.A keyboard control register
+DSP      = $D012        ; PIA.B display output register
+DSPCR    = $D013        ; PIA.B display control register
+ACC_OUT  = $FFDC        ; WOZMON's accumulator print routine
+CHR_OUT  = $FFEF        ; WOZMON's character print routine
+
+Mode     = $02
+Digit_L  = $03
+Password = $03
+PasGuess = $0C
+Score    = $16
+PassSeed = $17
+Corrects = $18
+Seed     = $19
+
+Start    = $0300        ; Start address of the program in RAM
+Text_DT  = $0300        ; Start address of the text data in RAM
+       
+*=Start
+        CLI
+Restart
+        LDA #$00
+        STA Score
+        LDX #$BE
+Do_Title
+        LDA Text_DT,X
+        JSR CHR_OUT
+        INX
+        BNE Do_Title
+GT_Digit
+        JSR Get_Num
+        STA Digit_L
+        BEQ GT_Digit
+        TYA
+        JSR CHR_OUT
+        JSR Wait_Key
+        CMP #$C8
+        BNE No_H_ard
+        LDA #$00
+No_H_ard
+        STA Mode
+        LDA Seed
+        STA PassSeed
+NextGues
+        LDX Digit_L
+        STX Corrects
+RNG_Seed
+        LDA Seed
+        ASL
+        BCC No_XOR
+        EOR #$CF
+No_XOR
+        STA Seed
+        AND #$0F
+        CMP #$0A
+        BCC Not_Hex
+        EOR #$0F
+Not_Hex
+        STA Password,X
+        DEX
+        BNE RNG_Seed
+        LDA #$8D
+        JSR CHR_OUT
+        SED
+        CLC
+        LDA Score
+        ADC #$01
+        STA Score
+        JSR ACC_OUT
+        LDA #$A0
+        JSR CHR_OUT
+        LDX Digit_L
+Inp_Gues
+        JSR Get_Num
+        STA PasGuess,X
+        TYA
+        JSR CHR_OUT
+        DEX
+        BNE Inp_Gues
+        LDA #$A0
+        JSR CHR_OUT
+        LDX Digit_L
+HintDeco
+        LDA PasGuess,X
+        CMP Password,X
+        BEQ Its_In
+New_Game
+        BEQ Restart
+        LDY Digit_L
+ScanPass
+        CMP Password,Y
+        CLC
+        BEQ Its_In
+        DEY
+        BNE ScanPass
+        LDA Mode
+        BEQ HardMode
+        LDA #$AD
+HardMode
+        BCC Not_In
+Its_In
+        LDA #$AB
+        BCS Right_SP
+        LDA #$BD
+        STA Password,Y
+Right_SP
+        BCC Not_In
+        STA Password,X
+        DEC Corrects
+        BEQ New_Game
+Not_In
+        JSR CHR_OUT
+        DEX
+        BNE HintDeco
+        LDA PassSeed
+        STA Seed
+        BNE NextGues
+
+Get_Num
+        CLD
+Not_Num
+        JSR Wait_Key
+        TAY
+        CLC
+        SBC #$AF
+        CMP #$0A
+        BCS Not_Num
+        RTS
+
+Wait_Key
+        INC Seed
+        LDA KBDCR
+        BPL Wait_Key
+        LDA KBD
+        RTS
+
+*=Text_DT+$BE
+ .byte $8D $8D $CD $E9 $EE $E4 $AD $F9
+ .byte $F5 $ED $E2 $EF $8D $AB $A0 $F2
+ .byte $E9 $E7 $E8 $F4 $8D $BD $A0 $D7
+ .byte $F2 $EF $EE $E7 $A0 $D3 $F0 $EF
+ .byte $F4 $8D $AD $A0 $CE $EF $F4 $A0
+ .byte $E9 $EE $AC $DB $A2 $C8 $A2 $DD
+ .byte $BD $E8 $E1 $F2 $E4 $ED $EF $E4
+ .byte $E5 $8D $8D $E4 $E9 $E7 $E9 $F4 
+ .byte $F3 $BA
