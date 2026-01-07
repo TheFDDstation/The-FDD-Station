@@ -1,4 +1,4 @@
-;My first 6502 game ever, FDD's "Mind-Yumbo" fitting in just 256 bytes, for my friend MM99YUM
+;My first 6502 game ever, The-FDD-Station's "Mind-Yumbo" fitting in just 256 bytes, for my friend MM99YUM
 ;It was inspired by Woz's "Master Mind" game for the same machine, but this has a lot more to it
 ;Last Update 9:50 PM GMT-6 Tue-6-Jan-2026
 ;
@@ -6,7 +6,7 @@
 :+ Means that the digit is at the correct spot
 ;= Means that the digit is in the number, but at the wrong spot
 ;- Means that the digits isn't anywhere in the number
-;After that, the game will ask you how many digits-long will the random number be, input a length between 0-9
+;After that, the game will ask you how many digits-long will the random number be, input a length between 1-9
 ;Just before starting the round, the game will wait for you to input the difficulty mode after entering in the numbers digit-length:
 ;Hard Mode - If you press the letter "H" on your keyboard, the game will not display the "-" symbols when decoding the hint, making it behave just like Woz's Master Mind
 ;Easy Mode - Press any other key and the "-"'s visible, behaving just like a wordle game but with numbers
