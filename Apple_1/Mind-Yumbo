@@ -5,7 +5,7 @@
 ;When starting the game (type "0300R" on WOZMON after entering in the assembled object code) the game instructs you how the hint decoding works:
 :+ Means that the digit is at the correct spot
 ;= Means that the digit is in the number, but at the wrong spot
-;- Means that the digits isn't anywhere in the number
+;- Means that the digit isn't anywhere in the number
 ;
 ;After that, the game will ask you how many digits-long will the random number be, input a length between 1-9
 ;Just before starting the round, the game will wait for you to input the difficulty mode after entering in the numbers digit-length:
@@ -13,7 +13,7 @@
 ;Easy Mode - Press any other key and the "-"'s will become visible, behaving just like a wordle game but with numbers
 ;
 ;On your left you got the number of guesses you have Done so far, the "score"
-;After inputing your guess of the number, the Apple-1 will decode the hint
+;After inputing your guess of the number, the Apple-1 will decode the hint and display it at the right
 ;
 KBD      = $D010        ; PIA.A keyboard input
 KBDCR    = $D011        ; PIA.A keyboard control register
