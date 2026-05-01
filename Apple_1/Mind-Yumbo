@@ -31,13 +31,14 @@ Corrects = $18
 Seed     = $19
 
 Start    = $0300        ; Start address of the program in RAM
-Text_DT  = Start+$BD    ; Start address of the text data in RAM
+DSP      = $BD
+Text_DT  = Start+DSP    ; Start address of the text data in RAM
        
 *=Start
 Restart
         LDA #$00
         STA Score
-        LDX #$BE
+        LDX #DSP
 Do_Title
         LDA Text_DT,X
         JSR CHR_OUT
