@@ -32,7 +32,7 @@ Corrects = $18
 Seed     = $19
 
 Start    = $0300        ; Start address of the program in RAM
-Text_DT  = Start+$BE    ; Start address of the text data in RAM
+Text_DT  = Start+$BD    ; Start address of the text data in RAM
        
 *=Start
 Restart
