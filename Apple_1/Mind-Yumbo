@@ -152,7 +152,7 @@ Wait_Key
 
 *=Text_DT
  .byte $8D $8D $CD $E9 $EE $E4 $AD $F9
- .byte $F5 $ED %A1 $E2 $EF $8D $AB $A0
+ .byte $F5 $ED $A1 $E2 $EF $8D $AB $A0
  .byte $F2 $E9 $E7 $E8 $F4 $8D $BD $A0
  .byte $D7 $F2 $EF $EE $E7 $A0 $D3 $F0
  .byte $EF $F4 $8D $AD $A0 $CE $EF $F4
