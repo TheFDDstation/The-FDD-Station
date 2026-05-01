@@ -1,6 +1,5 @@
 ;My first 6502 game ever, The-FDD-Station's "Mind-Yumbo" fitting in just 256 bytes, for my friend MM99YUM
 ;It was inspired by Woz's "Master Mind" game for the same machine, but this has a lot more to it
-;Last Update 9:50 PM GMT-6 Tue-6-Jan-2026
 ;
 ;When starting the game (type "0300R" on WOZMON after entering in the assembled object code) the game instructs you how the hint decoding works:
 ;+ Means that the digit is at the correct spot
