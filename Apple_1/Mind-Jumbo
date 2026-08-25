@@ -150,7 +150,7 @@ Wait_Key
         RTS
 
 *=Text_DT
- .byte $8D $8D $CD $E9 $EE $E4 $AD $F9
+ .byte $8D $8D $CD $E9 $EE $E4 $AD $CA
  .byte $F5 $ED $E2 $EF $A1 $8D $AB $A0
  .byte $F2 $E9 $E7 $E8 $F4 $8D $BD $A0
  .byte $D7 $F2 $EF $EE $E7 $A0 $D3 $F0
