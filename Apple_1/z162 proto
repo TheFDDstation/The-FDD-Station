@@ -135,6 +135,12 @@ Not_Num
         BCC Not_Num
         CMP #$BA
         BCC Is_Valid
+        CMP #$E1
+        BCC Check_Upper
+        CMP #$E7
+        BCS Not_Num
+        AND #$DF
+Check_Upper
         CMP #$C1
         BCC Not_Num
         CMP #$C7
