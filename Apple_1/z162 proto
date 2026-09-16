@@ -50,7 +50,10 @@ GT_Digit
         TYA
         JSR CTV
         JSR Wait_Key
-        EOR #$C8
+        CMP #$C8
+        BNE No_H_ard
+        LDA #$00
+No_H_ard
         STA Mode
         LDA Seed
         STA PassSeed
