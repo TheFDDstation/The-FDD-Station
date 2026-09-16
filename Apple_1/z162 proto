@@ -65,7 +65,6 @@ RNG_Seed
 No_XOR
         STA Seed
         AND #$0F
-        CMP #$0A
 Not_Hex
         STA Password,X
         DEX
